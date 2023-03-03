@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'cubit/third_page_cubit.dart';
 
 class ThirdTwo extends StatelessWidget {
   const ThirdTwo({
@@ -25,6 +28,11 @@ class ThirdTwo extends StatelessWidget {
               Text(
                 info!,
                 style: TextStyle(fontSize: 22),
+              ),
+              FloatingActionButton(
+                key: const Key('counterView_decrement_floatingActionButton'),
+                child: const Icon(Icons.exposure_minus_1),
+                onPressed: () => context.read<ThirdPageCubit>().decrement(),
               ),
             ],
           ),

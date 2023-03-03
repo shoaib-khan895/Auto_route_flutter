@@ -11,24 +11,26 @@
 // ignore_for_file: type=lint
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:auto_route/auto_route.dart' as _i7;
-import 'package:flutter/material.dart' as _i8;
+import 'package:auto_route/auto_route.dart' as _i9;
+import 'package:flutter/material.dart' as _i10;
 
+import '../bottom_nav_bar/main_bottom.dart' as _i5;
 import '../home_page.dart' as _i1;
 import '../screens/home_page_screens/first_page.dart' as _i2;
 import '../screens/home_page_screens/second_page.dart' as _i3;
-import '../screens/home_page_screens/third_page.dart' as _i4;
-import '../screens/third_page_screens/third_one.dart' as _i5;
-import '../screens/third_page_screens/third_two.dart' as _i6;
+import '../screens/home_page_screens/third_page.dart' as _i6;
+import '../screens/third_page_screens/cubit/third_page_provider.dart' as _i4;
+import '../screens/third_page_screens/third_one.dart' as _i7;
+import '../screens/third_page_screens/third_two.dart' as _i8;
 
-class AppRouter extends _i7.RootStackRouter {
-  AppRouter([_i8.GlobalKey<_i8.NavigatorState>? navigatorKey])
+class AppRouter extends _i9.RootStackRouter {
+  AppRouter([_i10.GlobalKey<_i10.NavigatorState>? navigatorKey])
       : super(navigatorKey);
 
   @override
-  final Map<String, _i7.PageFactory> pagesMap = {
+  final Map<String, _i9.PageFactory> pagesMap = {
     HomeRoute.name: (routeData) {
-      return _i7.MaterialPageX<dynamic>(
+      return _i9.MaterialPageX<dynamic>(
         routeData: routeData,
         child: const _i1.HomePage(),
       );
@@ -36,7 +38,7 @@ class AppRouter extends _i7.RootStackRouter {
     FirstRoute.name: (routeData) {
       final args = routeData.argsAs<FirstRouteArgs>(
           orElse: () => const FirstRouteArgs());
-      return _i7.MaterialPageX<dynamic>(
+      return _i9.MaterialPageX<dynamic>(
         routeData: routeData,
         child: _i2.FirstPage(
           key: args.key,
@@ -47,7 +49,7 @@ class AppRouter extends _i7.RootStackRouter {
     SecondRoute.name: (routeData) {
       final args = routeData.argsAs<SecondRouteArgs>(
           orElse: () => const SecondRouteArgs());
-      return _i7.MaterialPageX<dynamic>(
+      return _i9.MaterialPageX<dynamic>(
         routeData: routeData,
         child: _i3.SecondPage(
           key: args.key,
@@ -56,12 +58,28 @@ class AppRouter extends _i7.RootStackRouter {
         ),
       );
     },
+    ThirdRouteProvider.name: (routeData) {
+      return _i9.MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: const _i4.ThirdPageProvider(),
+      );
+    },
+    MainBottom.name: (routeData) {
+      final args = routeData.argsAs<MainBottomArgs>(
+          orElse: () => const MainBottomArgs());
+      return _i9.CustomPage<dynamic>(
+        routeData: routeData,
+        child: _i5.MainBottom(key: args.key),
+        opaque: true,
+        barrierDismissible: false,
+      );
+    },
     ThirdRoute.name: (routeData) {
       final args = routeData.argsAs<ThirdRouteArgs>(
           orElse: () => const ThirdRouteArgs());
-      return _i7.MaterialPageX<dynamic>(
+      return _i9.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: _i4.ThirdPage(
+        child: _i6.ThirdPage(
           key: args.key,
           name: args.name,
           dsg: args.dsg,
@@ -71,9 +89,9 @@ class AppRouter extends _i7.RootStackRouter {
     ThirdOne.name: (routeData) {
       final args =
           routeData.argsAs<ThirdOneArgs>(orElse: () => const ThirdOneArgs());
-      return _i7.MaterialPageX<dynamic>(
+      return _i9.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: _i5.ThirdOne(
+        child: _i7.ThirdOne(
           key: args.key,
           info: args.info,
         ),
@@ -82,51 +100,61 @@ class AppRouter extends _i7.RootStackRouter {
     ThirdTwo.name: (routeData) {
       final args =
           routeData.argsAs<ThirdTwoArgs>(orElse: () => const ThirdTwoArgs());
-      return _i7.CustomPage<dynamic>(
+      return _i9.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: _i6.ThirdTwo(
+        child: _i8.ThirdTwo(
           key: args.key,
           info: args.info,
         ),
-        transitionsBuilder: _i7.TransitionsBuilders.slideTop,
-        opaque: true,
-        barrierDismissible: false,
       );
     },
   };
 
   @override
-  List<_i7.RouteConfig> get routes => [
-        _i7.RouteConfig(
+  List<_i9.RouteConfig> get routes => [
+        _i9.RouteConfig(
           HomeRoute.name,
           path: '/',
         ),
-        _i7.RouteConfig(
+        _i9.RouteConfig(
           FirstRoute.name,
           path: '/first-page',
         ),
-        _i7.RouteConfig(
+        _i9.RouteConfig(
           SecondRoute.name,
           path: '/second-page',
         ),
-        _i7.RouteConfig(
-          ThirdRoute.name,
-          path: '/third-page',
+        _i9.RouteConfig(
+          ThirdRouteProvider.name,
+          path: 'thirdPage',
+          children: [
+            _i9.RouteConfig(
+              ThirdRoute.name,
+              path: '',
+              parent: ThirdRouteProvider.name,
+            ),
+            _i9.RouteConfig(
+              ThirdOne.name,
+              path: 'third-one',
+              parent: ThirdRouteProvider.name,
+            ),
+            _i9.RouteConfig(
+              ThirdTwo.name,
+              path: 'third-two',
+              parent: ThirdRouteProvider.name,
+            ),
+          ],
         ),
-        _i7.RouteConfig(
-          ThirdOne.name,
-          path: '/third-one',
-        ),
-        _i7.RouteConfig(
-          ThirdTwo.name,
-          path: '/third-two',
+        _i9.RouteConfig(
+          MainBottom.name,
+          path: '/bottomPage',
         ),
       ];
 }
 
 /// generated route for
 /// [_i1.HomePage]
-class HomeRoute extends _i7.PageRouteInfo<void> {
+class HomeRoute extends _i9.PageRouteInfo<void> {
   const HomeRoute()
       : super(
           HomeRoute.name,
@@ -138,9 +166,9 @@ class HomeRoute extends _i7.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i2.FirstPage]
-class FirstRoute extends _i7.PageRouteInfo<FirstRouteArgs> {
+class FirstRoute extends _i9.PageRouteInfo<FirstRouteArgs> {
   FirstRoute({
-    _i8.Key? key,
+    _i10.Key? key,
     String? info,
   }) : super(
           FirstRoute.name,
@@ -160,7 +188,7 @@ class FirstRouteArgs {
     this.info,
   });
 
-  final _i8.Key? key;
+  final _i10.Key? key;
 
   final String? info;
 
@@ -172,9 +200,9 @@ class FirstRouteArgs {
 
 /// generated route for
 /// [_i3.SecondPage]
-class SecondRoute extends _i7.PageRouteInfo<SecondRouteArgs> {
+class SecondRoute extends _i9.PageRouteInfo<SecondRouteArgs> {
   SecondRoute({
-    _i8.Key? key,
+    _i10.Key? key,
     String? name,
     int? emp,
   }) : super(
@@ -197,7 +225,7 @@ class SecondRouteArgs {
     this.emp,
   });
 
-  final _i8.Key? key;
+  final _i10.Key? key;
 
   final String? name;
 
@@ -210,15 +238,52 @@ class SecondRouteArgs {
 }
 
 /// generated route for
-/// [_i4.ThirdPage]
-class ThirdRoute extends _i7.PageRouteInfo<ThirdRouteArgs> {
+/// [_i4.ThirdPageProvider]
+class ThirdRouteProvider extends _i9.PageRouteInfo<void> {
+  const ThirdRouteProvider({List<_i9.PageRouteInfo>? children})
+      : super(
+          ThirdRouteProvider.name,
+          path: 'thirdPage',
+          initialChildren: children,
+        );
+
+  static const String name = 'ThirdRouteProvider';
+}
+
+/// generated route for
+/// [_i5.MainBottom]
+class MainBottom extends _i9.PageRouteInfo<MainBottomArgs> {
+  MainBottom({_i10.Key? key})
+      : super(
+          MainBottom.name,
+          path: '/bottomPage',
+          args: MainBottomArgs(key: key),
+        );
+
+  static const String name = 'MainBottom';
+}
+
+class MainBottomArgs {
+  const MainBottomArgs({this.key});
+
+  final _i10.Key? key;
+
+  @override
+  String toString() {
+    return 'MainBottomArgs{key: $key}';
+  }
+}
+
+/// generated route for
+/// [_i6.ThirdPage]
+class ThirdRoute extends _i9.PageRouteInfo<ThirdRouteArgs> {
   ThirdRoute({
-    _i8.Key? key,
+    _i10.Key? key,
     String? name,
     String? dsg,
   }) : super(
           ThirdRoute.name,
-          path: '/third-page',
+          path: '',
           args: ThirdRouteArgs(
             key: key,
             name: name,
@@ -236,7 +301,7 @@ class ThirdRouteArgs {
     this.dsg,
   });
 
-  final _i8.Key? key;
+  final _i10.Key? key;
 
   final String? name;
 
@@ -249,14 +314,14 @@ class ThirdRouteArgs {
 }
 
 /// generated route for
-/// [_i5.ThirdOne]
-class ThirdOne extends _i7.PageRouteInfo<ThirdOneArgs> {
+/// [_i7.ThirdOne]
+class ThirdOne extends _i9.PageRouteInfo<ThirdOneArgs> {
   ThirdOne({
-    _i8.Key? key,
+    _i10.Key? key,
     String? info,
   }) : super(
           ThirdOne.name,
-          path: '/third-one',
+          path: 'third-one',
           args: ThirdOneArgs(
             key: key,
             info: info,
@@ -272,7 +337,7 @@ class ThirdOneArgs {
     this.info,
   });
 
-  final _i8.Key? key;
+  final _i10.Key? key;
 
   final String? info;
 
@@ -283,14 +348,14 @@ class ThirdOneArgs {
 }
 
 /// generated route for
-/// [_i6.ThirdTwo]
-class ThirdTwo extends _i7.PageRouteInfo<ThirdTwoArgs> {
+/// [_i8.ThirdTwo]
+class ThirdTwo extends _i9.PageRouteInfo<ThirdTwoArgs> {
   ThirdTwo({
-    _i8.Key? key,
+    _i10.Key? key,
     String? info,
   }) : super(
           ThirdTwo.name,
-          path: '/third-two',
+          path: 'third-two',
           args: ThirdTwoArgs(
             key: key,
             info: info,
@@ -306,7 +371,7 @@ class ThirdTwoArgs {
     this.info,
   });
 
-  final _i8.Key? key;
+  final _i10.Key? key;
 
   final String? info;
 

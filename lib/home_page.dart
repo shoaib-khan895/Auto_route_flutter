@@ -1,8 +1,9 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:auto_route/empty_router_widgets.dart';
+import 'package:auto_route_flutter/screens/third_page_screens/cubit/third_page_provider.dart';
 import 'package:flutter/material.dart';
 
 import 'app_router/router.gr.dart';
-
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -30,9 +31,12 @@ class HomePage extends StatelessWidget {
                 child: const Text('Second Page')),
             ElevatedButton(
                 onPressed: () {
-                  context.pushRoute(ThirdRoute(name: 'shoaib1', dsg: 'Dev'));
+                  context.pushRoute(ThirdRouteProvider(children: [ThirdRoute(name: 'shoaib1', dsg: 'Dev')]));
                 },
                 child: const Text('Third Page')),
+            ElevatedButton(onPressed: (){
+              context.pushRoute(MainBottom());
+            }, child: Text('Go To Bottom Navigation'))
           ],
         ),
       ),
